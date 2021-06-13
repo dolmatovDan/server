@@ -1,9 +1,14 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 8000;
 const fs = require('fs');
+
+let apiRoutes = require("./routes");
+
+
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -17,21 +22,23 @@ function getRand() {
   return obj[Math.floor(Math.random() * obj.length)]
 }
 
-
+//connect to mongoose
+const dbPath = 'mongodb://localhost/base';
+const options = {useNewUrlParser: true, useUnifiedTopology: true}
+const mongo = mongoose.connect(dbPath, options);
+mongo.then(() => {
+    console.log('connected');
+}, error => {
+    console.log(error, 'error');
+})
 
 
 app.get('/', (req, res) => {
   res.send(getRand())
 });
 
-app.post('/', (req, res) => {
-  res.send(req.body);
-  console.log(req.body);
-  fs.writeFile('users.json', JSON.stringify(req.body), 'utf8', () => {
-    console.log('done');
-  });
-});
 
+app.use('/api', apiRoutes);
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
