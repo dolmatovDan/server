@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const bioSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
   name: {
       type: String,
       required: true
@@ -13,11 +13,23 @@ const bioSchema = mongoose.Schema({
   password: {
       type: String,
       required: true
-  }  
+  },
+  dialogues: {
+      type: [String],
+      required: true,
+      default: []
+  },
+  avatar: {
+      type: String,
+      required: false,
+      default: ""
+  }
 });
 
+
+
 // Export Bio Model
-let Bio = module.exports = mongoose.model('bio', bioSchema);
+let User = module.exports = mongoose.model('user', userSchema);
 module.exports.get = function (callback, limit) {
-   Bio.find(callback).limit(limit); 
+   User.find(callback).limit(limit); 
 }

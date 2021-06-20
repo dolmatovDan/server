@@ -1,11 +1,16 @@
 //initialize express router
 let router = require('express').Router();
-//Import Bio Controller
-const bioController = require('./controllers/bioController');
-// Bio routes
+//Import User Controller
+const userController = require('./controllers/userController');
+const dialogueController = require('./controllers/dialogueController');
+// User routes
 router.route('/auth')
-    .post(bioController.add);
+    .post(userController.add);
 router.route('/signin')
-    .post(bioController.signIn);
+    .post(userController.signIn);
+
+//Dialogue routes
+router.route('/dialogue')
+    .post(dialogueController.add);
 //Export API routes
 module.exports = router;
