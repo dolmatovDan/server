@@ -5,21 +5,6 @@ const bioSchema = mongoose.Schema({
       type: String,
       required: true
   },
-  email: {
-      type: String,
-      required: false,
-      default: ""
-  },
-  phone: {
-      type: String,
-      required: false,
-      default: ""
-  },
-  address: {
-      type: String,
-      required: false,
-      default: ""
-  },
   created_at: {
       type: Date,
       default: Date.now,
