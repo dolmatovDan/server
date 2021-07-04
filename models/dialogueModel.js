@@ -26,5 +26,5 @@ const dialogueSchema = mongoose.Schema({
 // Export Bio Model
 let Dialogue = module.exports = mongoose.model('dialogue', dialogueSchema);
 module.exports.get = function (callback, limit) {
-   Dialogue.find(callback).limit(limit); 
+  Dialogue.find(callback).limit(limit); 
 }

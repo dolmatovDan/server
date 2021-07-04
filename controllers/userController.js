@@ -12,10 +12,11 @@ exports.add = async function (req, res) {
     }
     const user = new User();
     if(req.body.login && req.body.password) {
-        user.name = req.body.login;
+        user.login = req.body.login;
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         user.password = hashedPassword;
-
+        user.name = req.body.name;
+        user.surName = req.body.surName;
         user.save(function (err) {
             if (err)
                 return res.json(err);
