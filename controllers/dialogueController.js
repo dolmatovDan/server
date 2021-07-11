@@ -8,15 +8,28 @@ exports.add = async function (req, res) {
       message: "Вы не указали нужные данные для создания беседы",
     });
   }
-
   const dialogue = new Dialogue();
   dialogue.name = req.body.name;
   dialogue.admin = req.body.admin;
-
   dialogue.users = req.body.users
     ? [...req.body.users, dialogue.admin]
     : [dialogue.admin];
 
+  for (let user of dialogue.users) {
+    let curUser = await User.findOne({ login: user });
+    if (!curUser) {
+      return res.send({ message: "Нет одного из пользователей" });
+    }
+    curUser.dialogues = [...curUser.dialogues, dialogue._id];
+    curUser
+      .save()
+      .then(() => {
+        res.status(201).json({ success: true });
+      })
+      .catch(() => {
+        res.status(500).json({ success: false });
+      });
+  }
   dialogue
     .save()
     .then(() => {
@@ -25,16 +38,6 @@ exports.add = async function (req, res) {
     .catch(() => {
       res.status(500).json({ success: false });
     });
-};
-exports.get = async function (req, res) {
-  let admin = req.body.admin;
-
-  let result = await Dialogue.find({ admin: admin });
-  let Arr = result.map((el) => {
-    return { ...el, name: "Terry" };
-  });
-  console.log(Arr);
-  return res.send(result);
 };
 
 exports.rename = async function (req, res) {

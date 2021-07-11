@@ -1,46 +1,48 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
   login: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   created_at: {
-      type: Date,
-      default: Date.now,
-      required: false
+    type: Date,
+    default: Date.now,
+    required: false,
   },
   password: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   dialogues: {
-      type: [String],
-      required: true,
-      default: []
+    type: [String],
+    required: true,
+    default: [],
   },
   avatar: {
-      type: String,
-      required: false,
-      default: ""
+    type: String,
+    required: false,
+    default: "",
   },
   name: {
     type: String,
     required: false,
-    default: ""
+    default: "",
   },
   surName: {
     type: String,
     required: false,
-    default: ""
+    default: "",
   },
-  
+  dialogues: {
+    type: [String],
+    required: false,
+    default: [],
+  },
 });
 
-
-
 // Export Bio Model
-let User = module.exports = mongoose.model('user', userSchema);
+let User = (module.exports = mongoose.model("user", userSchema));
 module.exports.get = function (callback, limit) {
-   User.find(callback).limit(limit); 
-}
+  User.find(callback).limit(limit);
+};
